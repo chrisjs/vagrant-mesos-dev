@@ -5,7 +5,9 @@ set -e
 APT_PACKAGES=(build-essential openjdk-6-jdk python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev)
 
 LOG_DIR=$HOME/logs
-IP=`/sbin/ifconfig eth1|grep inet|head -1|sed 's/\:/ /'|awk '{print $3}'`
+
+DEFAULT_INTERFACE=eth1
+IP=`/sbin/ifconfig $DEFAULT_INTERFACE|grep inet|head -1|sed 's/\:/ /'|awk '{print $3}'`
 
 MESOS_VERSION=0.21.0
 MESOS_DIST_DIR=$HOME/mesos-$MESOS_VERSION
