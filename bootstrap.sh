@@ -4,27 +4,28 @@ set -e
 
 APT_PACKAGES=(build-essential openjdk-6-jdk python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev)
 
-LOG_DIR=$HOME/logs
+BASE_DIR=$HOME
+LOG_DIR=$BASE_DIR/logs
 
 DEFAULT_INTERFACE=eth1
 IP=`/sbin/ifconfig $DEFAULT_INTERFACE|grep inet|head -1|sed 's/\:/ /'|awk '{print $3}'`
 
 MESOS_VERSION=0.21.0
-MESOS_DIST_DIR=$HOME/mesos-$MESOS_VERSION
+MESOS_DIST_DIR=$BASE_DIR/mesos-$MESOS_VERSION
 MESOS_ARCHIVE_FILE_NAME=mesos-$MESOS_VERSION.tar.gz
 MESOS_BASE_URL=http://apache.mirrors.tds.net/mesos
 MESOS_ARCHIVE_URL=$MESOS_BASE_URL/$MESOS_VERSION/$MESOS_ARCHIVE_FILE_NAME
 MESOS_BUILD_DIR=$MESOS_DIST_DIR/build
-MESOS_WORK_DIR=$HOME/mesos-work
+MESOS_WORK_DIR=$BASE_DIR/mesos-work
 MESOS_PORT=5050
 MESOS_LIB_DIR=/usr/local/lib
 
 ZOOKEEPER_VERSION=3.4.6
-ZOOKEEPER_DIST_DIR=$HOME/zookeeper-$ZOOKEEPER_VERSION
+ZOOKEEPER_DIST_DIR=$BASE_DIR/zookeeper-$ZOOKEEPER_VERSION
 ZOOKEEPER_ARCHIVE_FILE_NAME=zookeeper-$ZOOKEEPER_VERSION.tar.gz
 ZOOKEEPER_BASE_URL=http://apache.mirrors.tds.net/zookeeper/zookeeper-$ZOOKEEPER_VERSION
 ZOOKEEPER_ARCHIVE_URL=$ZOOKEEPER_BASE_URL/$ZOOKEEPER_ARCHIVE_FILE_NAME
-ZOOKEEPER_DATA_DIR=$HOME/zookeeper-data
+ZOOKEEPER_DATA_DIR=$BASE_DIR/zookeeper-data
 ZOOKEEPER_CONF=$ZOOKEEPER_DIST_DIR/conf/zoo.cfg
 
 update_deps() {
@@ -101,7 +102,7 @@ do_install_mesos() {
   if [ ! -d $MESOS_BUILD_DIR ]
   then
     echo "Building/installing Mesos"
-    cd $MESOS_DIST_DIR ; mkdir build ; cd build ; ../configure ; make ; make check ; sudo make install ; cd $HOME
+    cd $MESOS_DIST_DIR ; mkdir build ; cd build ; ../configure ; make ; make check ; sudo make install ; cd $BASE_DIR
   else
     echo "Mesos build directory already exists, skipping"
   fi
@@ -122,7 +123,7 @@ do_install_zookeeper() {
     echo "tickTime=2000
 initLimit=10
 syncLimit=5
-dataDir=$HOME/zookeeper-data
+dataDir=$BASE_DIR/zookeeper-data
 clientPort=2181
 " > $ZOOKEEPER_CONF
   else
