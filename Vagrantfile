@@ -1,4 +1,4 @@
--*- mode: ruby -*-
+# -*- mode: ruby -*-
 
 VAGRANTFILE_API_VERSION = "2"
 
