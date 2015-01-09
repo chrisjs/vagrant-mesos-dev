@@ -28,6 +28,20 @@ ZOOKEEPER_ARCHIVE_URL=$ZOOKEEPER_BASE_URL/$ZOOKEEPER_ARCHIVE_FILE_NAME
 ZOOKEEPER_DATA_DIR=$BASE_DIR/zookeeper-data
 ZOOKEEPER_CONF=$ZOOKEEPER_DIST_DIR/conf/zoo.cfg
 
+check_platform() {
+  UNAME=`uname -a`
+
+  if [[ $UNAME == Linux*_64* ]]
+  then
+    if [ ! -f /etc/debian_version ]
+    then
+      echo "Unsupported linux distro"
+    fi
+  else
+    echo "Unsupported OS"
+  fi
+}
+
 update_deps() {
   do_apt_update
 
@@ -171,6 +185,7 @@ fetch_remote_file() {
   curl -O --fail --silent --show-error "$@"
 }
 
+check_platform
 update_deps
 fetch_apps
 install_apps
