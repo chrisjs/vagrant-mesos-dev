@@ -28,6 +28,13 @@ ZOOKEEPER_ARCHIVE_URL=$ZOOKEEPER_BASE_URL/$ZOOKEEPER_ARCHIVE_FILE_NAME
 ZOOKEEPER_DATA_DIR=$BASE_DIR/zookeeper-data
 ZOOKEEPER_CONF=$ZOOKEEPER_DIST_DIR/conf/zoo.cfg
 
+DOCKER_VERSION=1.4.0
+DOCKER_DIST_FILE_NAME=docker-$DOCKER_VERSION
+DOCKER_DIST_FILE=$BASE_DIR/docker-$DOCKER_VERSION
+DOCKER_BASE_URL=https://get.docker.com/builds/Linux/x86_64
+DOCKER_FILE_URL=$DOCKER_BASE_URL/docker-$DOCKER_VERSION
+DOCKER_INSTALL_PATH=/usr/sbin
+
 check_platform() {
   UNAME=`uname -a`
 
@@ -59,6 +66,7 @@ do_apt_install() {
 }
 
 fetch_apps() {
+  do_fetch_docker
   do_fetch_mesos
   do_fetch_zookeeper
 }
@@ -72,14 +80,26 @@ install_apps() {
     echo "App log dir already exists, skipping"
   fi
 
+  do_install_docker
   do_install_mesos
   do_install_zookeeper
 }
 
 start_apps() {
+  do_start_docker
   do_start_zookeeper
   do_start_mesos_master
   do_start_mesos_slave
+}
+
+do_fetch_docker() {
+  if [ ! -f $DOCKER_DIST_FILE ]
+  then
+    echo "Fetching docker"
+    fetch_remote_file "-o $DOCKER_DIST_FILE $DOCKER_FILE_URL"
+  else
+    echo "Docker file already exists, skipping"
+  fi
 }
 
 do_fetch_mesos() {
@@ -104,6 +124,17 @@ do_fetch_zookeeper() {
   fi
 }
 
+do_install_docker() {
+  if [ ! -f $DOCKER_DIST_FILE ]
+  then
+    echo "Docker binary does not exist, skipping"
+  else
+    echo "Installing docker"
+    sudo chmod +x $DOCKER_DIST_FILE ; sudo mv $DOCKER_DIST_FILE $DOCKER_INSTALL_PATH ;\
+     sudo ln -s $DOCKER_INSTALL_PATH/$DOCKER_DIST_FILE_NAME $DOCKER_INSTALL_PATH/docker
+  fi
+}
+
 do_install_mesos() {
   if [ ! -d $MESOS_WORK_DIR ]
   then
@@ -116,7 +147,8 @@ do_install_mesos() {
   if [ ! -d $MESOS_BUILD_DIR ]
   then
     echo "Building/installing Mesos"
-    cd $MESOS_DIST_DIR ; mkdir build ; cd build ; ../configure ; make ; make check ; sudo make install ; cd $BASE_DIR
+    cd $MESOS_DIST_DIR ; mkdir build ; cd build ; ../configure ; make ; make check ;\
+     sudo make install ; cd $BASE_DIR
   else
     echo "Mesos build directory already exists, skipping"
   fi
@@ -142,6 +174,18 @@ clientPort=2181
 " > $ZOOKEEPER_CONF
   else
     echo "ZooKeeper conf already exists, skipping"
+  fi
+}
+
+do_start_docker() {
+  echo "Checking for running docker"
+
+  if [ "x`pidof docker`" = "x" ]
+  then
+    echo "Starting docker"
+    sudo $DOCKER_INSTALL_PATH/docker -d >> $LOG_DIR/docker.log 2>&1 &
+  else
+    echo "Docker already running"
   fi
 }
 
