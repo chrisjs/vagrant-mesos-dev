@@ -62,7 +62,7 @@ do_apt_update() {
 }
 
 do_apt_install() {
-  sudo apt-get install -y "$@"
+  sudo apt-get install -y $@
 }
 
 fetch_apps() {
@@ -226,7 +226,7 @@ do_start_mesos_slave() {
 }
 
 fetch_remote_file() {
-  curl -O --fail --silent --show-error "$@"
+  curl -O --fail --silent --show-error $@
 }
 
 check_platform
