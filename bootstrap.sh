@@ -2,7 +2,7 @@
 
 set -e
 
-APT_PACKAGES=(build-essential openjdk-6-jdk python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev cgroup-lite)
+APT_PACKAGES=(build-essential openjdk-6-jdk python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev cgroup-lite golang)
 
 BASE_DIR=$HOME
 LOG_DIR=$BASE_DIR/logs
