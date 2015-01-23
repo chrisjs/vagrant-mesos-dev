@@ -2,11 +2,9 @@
 
 set -e
 
-APT_PACKAGES=(build-essential openjdk-6-jdk python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev cgroup-lite golang)
-
 BASE_DIR=$HOME
 LOG_DIR=$BASE_DIR/logs
-
+SCRIPTS_DIR=$BASE_DIR/scripts
 DEFAULT_INTERFACE=eth1
 IP=`/sbin/ifconfig $DEFAULT_INTERFACE|grep inet|head -1|sed 's/\:/ /'|awk '{print $3}'`
 
@@ -43,26 +41,12 @@ check_platform() {
     if [ ! -f /etc/debian_version ]
     then
       echo "Unsupported linux distro"
+    else
+      source $SCRIPTS_DIR/ubuntu-deps.sh
     fi
   else
     echo "Unsupported OS"
   fi
-}
-
-update_deps() {
-  do_apt_update
-
-  for i in ${APT_PACKAGES[@]}; do
-    do_apt_install ${i}
-  done
-}
-
-do_apt_update() {
-  sudo apt-get update
-}
-
-do_apt_install() {
-  sudo apt-get install -y $@
 }
 
 fetch_apps() {

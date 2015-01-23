@@ -6,6 +6,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "box-cutter/ubuntu1404"
   config.vm.box_check_update = false
 
+  config.vm.provision "shell", inline: "mkdir ~/scripts"
+  config.vm.provision "file", source: "ubuntu-deps.sh", destination: "~/scripts/ubuntu-deps.sh"
   config.vm.provision :shell, path: "bootstrap.sh", privileged: false
 
   config.vm.network "private_network", ip: "10.0.0.10"
@@ -19,3 +21,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ['modifyvm', :id, '--cpus', 2]
   end
 end
+
