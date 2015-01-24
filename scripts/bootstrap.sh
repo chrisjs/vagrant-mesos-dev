@@ -22,9 +22,7 @@ pre_install() {
 }
 
 check_platform() {
-  UNAME=`uname -a`
-
-  if [[ $UNAME == Linux*_64* ]]
+  if [ "$OS_NAME" = Linux ] && [ "$PROCESSOR_ARCH" = x86_64 ]
   then
     if [ ! -f /etc/debian_version ]
     then
