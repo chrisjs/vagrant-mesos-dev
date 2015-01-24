@@ -1,6 +1,10 @@
+#!/bin/bash
+
+set -e
+
 APT_PACKAGES=(build-essential openjdk-6-jdk python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev cgroup-lite golang)
 
-update_deps() {
+install_os_deps() {
   do_apt_update
 
   for i in ${APT_PACKAGES[@]}; do

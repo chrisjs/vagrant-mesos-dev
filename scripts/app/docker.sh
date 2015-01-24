@@ -1,0 +1,49 @@
+#!/bin/bash
+
+set -e
+
+DOCKER_VERSION=1.4.0
+DOCKER_DIST_FILE_NAME=docker-$DOCKER_VERSION
+DOCKER_DIST_FILE=$BASE_DIR/docker-$DOCKER_VERSION
+DOCKER_BASE_URL=https://get.docker.com/builds/Linux/x86_64
+DOCKER_FILE_URL=$DOCKER_BASE_URL/docker-$DOCKER_VERSION
+DOCKER_INSTALL_PATH=/usr/sbin
+
+install_docker() {
+  do_fetch_docker
+  do_install_docker
+  do_start_docker
+}
+
+do_fetch_docker() {
+  if [ ! -f $DOCKER_DIST_FILE ]
+  then
+    echo "Fetching docker"
+    fetch_remote_file "-o $DOCKER_DIST_FILE $DOCKER_FILE_URL"
+  else
+    echo "Docker file already exists, skipping"
+  fi
+}
+
+do_install_docker() {
+  if [ ! -f $DOCKER_DIST_FILE ]
+  then
+    echo "Docker binary does not exist, skipping"
+  else
+    echo "Installing docker"
+    sudo chmod +x $DOCKER_DIST_FILE ; sudo mv $DOCKER_DIST_FILE $DOCKER_INSTALL_PATH ;\
+     sudo ln -s $DOCKER_INSTALL_PATH/$DOCKER_DIST_FILE_NAME $DOCKER_INSTALL_PATH/docker
+  fi
+}
+
+do_start_docker() {
+  echo "Checking for running docker"
+
+  if [ "x`pidof docker`" = "x" ]
+  then
+    echo "Starting docker"
+    sudo $DOCKER_INSTALL_PATH/docker -d >> $LOG_DIR/docker.log 2>&1 &
+  else
+    echo "Docker already running"
+  fi
+}
