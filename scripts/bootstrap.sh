@@ -15,6 +15,9 @@ APPS=(docker zookeeper mesos)
 DEFAULT_PLATFORM_ARCH=x86_64
 PLATFORM_ARCH=$DEFAULT_PLATFORM_ARCH
 
+DEFAULT_OS_NAME=Linux
+OS_NAME=$DEFAULT_OS_NAME
+
 pre_install() {
   check_platform
   create_log_dir
@@ -37,6 +40,8 @@ check_platform() {
     echo "Unsupported OS"
     exit 1
   fi
+
+  echo "Starting build for $OS_NAME on $PLATFORM_ARCH"
 }
 
 create_log_dir() {
