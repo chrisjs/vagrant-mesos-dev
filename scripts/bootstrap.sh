@@ -12,8 +12,7 @@ SCRIPTS_UTIL_DIR=$SCRIPTS_DIR/util
 
 APPS=(docker zookeeper mesos)
 
-DEFAULT_PLATFORM_ARCH=x86_64
-PLATFORM_ARCH=$DEFAULT_PLATFORM_ARCH
+PROCESSOR_ARCH=`uname -p`
 
 DEFAULT_OS_NAME=Linux
 OS_NAME=$DEFAULT_OS_NAME
@@ -41,7 +40,7 @@ check_platform() {
     exit 1
   fi
 
-  echo "Starting build for $OS_NAME on $PLATFORM_ARCH"
+  echo "Starting build for $OS_NAME on $PROCESSOR_ARCH"
 }
 
 create_log_dir() {
