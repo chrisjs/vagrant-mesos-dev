@@ -10,7 +10,7 @@ SCRIPTS_OS_DIR=$SCRIPTS_DIR/os
 SCRIPTS_APP_DIR=$SCRIPTS_DIR/app
 SCRIPTS_UTIL_DIR=$SCRIPTS_DIR/util
 
-APPS=(docker zookeeper mesos)
+APP_BUILD_SPECS=(docker zookeeper mesos)
 
 PROCESSOR_ARCH=`uname -p`
 OS_NAME=`uname -s`
@@ -62,7 +62,7 @@ source_deps() {
 install() {
   install_os_deps
 
-  for i in ${APPS[@]}; do
+  for i in ${APP_BUILD_SPECS[@]}; do
     if [ ! -f $SCRIPTS_APP_DIR/${i}.sh ]
     then
       echo "Could not source application file at: $SCRIPTS_APP_DIR/${i}.sh"
