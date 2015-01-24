@@ -13,9 +13,7 @@ SCRIPTS_UTIL_DIR=$SCRIPTS_DIR/util
 APPS=(docker zookeeper mesos)
 
 PROCESSOR_ARCH=`uname -p`
-
-DEFAULT_OS_NAME=Linux
-OS_NAME=$DEFAULT_OS_NAME
+OS_NAME=`uname -s`
 
 pre_install() {
   check_platform
