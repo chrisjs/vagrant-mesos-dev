@@ -55,15 +55,27 @@ create_log_dir() {
 }
 
 source_deps() {
-    source $SCRIPTS_UTIL_DIR/util.sh
+  if [ ! -f $SCRIPTS_UTIL_DIR/util.sh ]
+  then
+    echo "Could not source util script at: $SCRIPTS_UTIL_DIR/util.sh"
+    exit 1
+  fi
+
+  source $SCRIPTS_UTIL_DIR/util.sh
 }
 
 install() {
   install_os_deps
 
   for i in ${APPS[@]}; do
-    source $SCRIPTS_APP_DIR/${i}.sh
-    install_${i}
+    if [ ! -f $SCRIPTS_APP_DIR/${i}.sh ]
+    then
+      echo "Could not source application file at: $SCRIPTS_APP_DIR/${i}.sh"
+      exit 1
+    else
+      source $SCRIPTS_APP_DIR/${i}.sh
+      install_${i}
+    fi
   done
 }
 
