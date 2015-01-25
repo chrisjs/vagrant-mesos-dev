@@ -7,7 +7,7 @@ LOG_DIR=$BASE_DIR/logs
 
 SCRIPTS_DIR=$BASE_DIR/scripts
 SCRIPTS_OS_DIR=$SCRIPTS_DIR/os
-SCRIPTS_APP_DIR=$SCRIPTS_DIR/app
+SCRIPTS_APP_BUILD_SPECS_DIR=$SCRIPTS_DIR/app
 SCRIPTS_UTIL_DIR=$SCRIPTS_DIR/util
 
 APP_BUILD_SPECS=(docker zookeeper mesos)
@@ -63,12 +63,12 @@ install() {
   install_os_deps
 
   for i in ${APP_BUILD_SPECS[@]}; do
-    if [ ! -f $SCRIPTS_APP_DIR/${i}.sh ]
+    if [ ! -f $SCRIPTS_APP_BUILD_SPECS_DIR/${i}.sh ]
     then
-      echo "Could not source application file at: $SCRIPTS_APP_DIR/${i}.sh"
+      echo "Could not source application file at: $SCRIPTS_APP_BUILD_SPECS_DIR/${i}.sh"
       exit 1
     else
-      source $SCRIPTS_APP_DIR/${i}.sh
+      source $SCRIPTS_APP_BUILD_SPECS_DIR/${i}.sh
       install_${i}
     fi
   done
