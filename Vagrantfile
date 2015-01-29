@@ -10,9 +10,6 @@ VM_MEMORY = ENV['VM_MEMORY'] ? ENV['VM_MEMORY'] : 2048
 VM_CPUS = ENV['VM_CPUS'] ? ENV['VM_CPUS'] : 2
 VM_GUI = ENV['VM_GUI'] ? ENV['VM_GUI'] : false
 
-printf "Configuring VM with box: %s, check update: %s, network ip: %s, name: %s, memory: %d, cpus: %d, gui enabled: %s\n\n",
-  VM_BOX, VM_BOX_CHECK_UPDATE, VM_NETWORK_IP, VM_NAME, VM_MEMORY, VM_CPUS, VM_GUI
-
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = VM_BOX
   config.vm.box_check_update = VM_BOX_CHECK_UPDATE
@@ -28,15 +25,24 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "forwarded_port", guest: 5050, host: 5050
 
   config.vm.provider :virtualbox do |vb|
+    log_install_info
+
     vb.name = VM_NAME
     vb.customize ['modifyvm', :id, '--memory', VM_MEMORY]
     vb.customize ['modifyvm', :id, '--cpus', VM_CPUS]
   end
 
   config.vm.provider "vmware_fusion" do |vb|
+    log_install_info
+
     vb.name = VM_NAME
     vb.gui = VM_GUI
     vb.vmx['memsize'] = VM_MEMORY
     vb.vmx['numvcpus'] = VM_CPUS
   end
+end
+
+def log_install_info
+  printf "Configuring VM with box: %s, check update: %s, network ip: %s, name: %s, memory: %d, cpus: %d, gui enabled: %s\n\n",
+    VM_BOX, VM_BOX_CHECK_UPDATE, VM_NETWORK_IP, VM_NAME, VM_MEMORY, VM_CPUS, VM_GUI
 end
