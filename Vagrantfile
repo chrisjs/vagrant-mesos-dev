@@ -3,7 +3,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "box-cutter/ubuntu1404"
+  config.vm.box = "puphpet/ubuntu1404-x64"
   config.vm.box_check_update = false
 
   config.vm.provision :file, source: "scripts", destination: "~/scripts"
@@ -19,4 +19,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ['modifyvm', :id, '--memory', "2048"]
     vb.customize ['modifyvm', :id, '--cpus', 2]
   end
+
+  config.vm.provider "vmware_fusion" do |vb|
+    vb.name = "trusty.14.04.1.64bit.v1.0.11.mesos.singlenodedev"
+    vb.gui = true
+    vb.vmw['memsize'] = "4096"
+    vb.vmw['numvcpus'] = "2"
+  end
+
 end
