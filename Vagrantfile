@@ -10,6 +10,8 @@ VM_MEMORY = ENV['VM_MEMORY'] ? ENV['VM_MEMORY'] : 2048
 VM_CPUS = ENV['VM_CPUS'] ? ENV['VM_CPUS'] : 2
 VM_GUI = ENV['VM_GUI'] ? ENV['VM_GUI'] : false
 
+Vagrant.require_version ">= 1.6.3"
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = VM_BOX
   config.vm.box_check_update = VM_BOX_CHECK_UPDATE
