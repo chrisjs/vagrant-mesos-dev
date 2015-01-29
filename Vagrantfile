@@ -24,21 +24,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # TODO: https://github.com/chrisjs/vagrant-mesos-dev/issues/7
   config.vm.network "forwarded_port", guest: 5050, host: 5050
 
-  config.vm.provider :virtualbox do |vb|
+  config.vm.provider :virtualbox do |provider|
     log_install_info
 
-    vb.name = VM_NAME
-    vb.customize ['modifyvm', :id, '--memory', VM_MEMORY]
-    vb.customize ['modifyvm', :id, '--cpus', VM_CPUS]
+    provider.name = VM_NAME
+    provider.customize ['modifyvm', :id, '--memory', VM_MEMORY]
+    provider.customize ['modifyvm', :id, '--cpus', VM_CPUS]
   end
 
-  config.vm.provider "vmware_fusion" do |vb|
+  config.vm.provider "vmware_fusion" do |provider|
     log_install_info
 
-    vb.name = VM_NAME
-    vb.gui = VM_GUI
-    vb.vmx['memsize'] = VM_MEMORY
-    vb.vmx['numvcpus'] = VM_CPUS
+    provider.name = VM_NAME
+    provider.gui = VM_GUI
+    provider.vmx['memsize'] = VM_MEMORY
+    provider.vmx['numvcpus'] = VM_CPUS
   end
 end
 
