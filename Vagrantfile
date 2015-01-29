@@ -17,12 +17,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = VM_BOX
   config.vm.box_check_update = VM_BOX_CHECK_UPDATE
 
+  # TODO: https://github.com/chrisjs/vagrant-mesos-dev/issues/7
   config.vm.provision :file, source: "scripts", destination: "~/scripts"
   config.vm.provision :shell, path: "scripts/bootstrap.sh", privileged: false
 
   config.vm.network :private_network, ip: VM_NETWORK_IP
 
   # mesos UI
+  # TODO: https://github.com/chrisjs/vagrant-mesos-dev/issues/7
   config.vm.network "forwarded_port", guest: 5050, host: 5050
 
   config.vm.provider :virtualbox do |vb|
