@@ -26,7 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # TODO: https://github.com/chrisjs/vagrant-mesos-dev/issues/7
   config.vm.network "forwarded_port", guest: 5050, host: 5050
 
-  config.vm.provider :virtualbox do |provider|
+  config.vm.provider "virtualbox" do |provider|
     provider.name = VM_NAME
     provider.customize ['modifyvm', :id, '--memory', VM_MEMORY]
     provider.customize ['modifyvm', :id, '--cpus', VM_CPUS]
