@@ -10,8 +10,14 @@ DOCKER_FILE_URL=$DOCKER_BASE_URL/docker-$DOCKER_VERSION
 DOCKER_INSTALL_PATH=/usr/sbin
 
 install_docker() {
-  do_fetch_docker
-  do_install_docker
+  if [ ! -f $DOCKER_INSTALL_PATH/$DOCKER_DIST_FILE_NAME ]
+  then
+    do_fetch_docker
+    do_install_docker
+  else
+    echo "Docker already installed, skipping"
+  fi
+
   do_start_docker
 }
 

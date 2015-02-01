@@ -12,6 +12,7 @@ MESOS_WORK_DIR=$BASE_DIR/mesos-work
 MESOS_MASTER_PORT=5050
 MESOS_LIB_DIR=/usr/local/lib
 MESOS_MASTER_IP=0.0.0.0
+MESOS_INSTALL_DIR=/usr/local/sbin
 
 install_mesos() {
   do_fetch_mesos
@@ -27,7 +28,7 @@ do_fetch_mesos() {
     fetch_remote_file "-o $BASE_DIR/$MESOS_ARCHIVE_FILE_NAME $MESOS_ARCHIVE_URL"
     tar zxf $BASE_DIR/$MESOS_ARCHIVE_FILE_NAME -C $BASE_DIR
   else
-    echo "Extracted mesos source directory already exists, skipping"
+    echo "Extracted Mesos source directory already exists, skipping"
   fi
 }
 
@@ -42,34 +43,56 @@ do_install_mesos() {
 
   if [ ! -d $MESOS_BUILD_DIR ]
   then
-    echo "Building/installing Mesos"
-    cd $MESOS_DIST_DIR ; mkdir build ; cd build ; ../configure ; make ; make check ;\
-     sudo make install ; cd $BASE_DIR
+    echo "Creating Mesos build dir at $MESOS_BUILD_DIR"
+    mkdir $MESOS_BUILD_DIR
   else
     echo "Mesos build directory already exists, skipping"
+  fi
+
+  if [ ! -f $MESOS_BUILD_DIR/.complete ]
+  then
+    echo "Building/installing Mesos"
+
+    pushd $MESOS_BUILD_DIR
+
+    ../configure ; make ; make check ; sudo make install ; touch .complete
+
+    popd
+  else
+    echo "Mesos already built and installed, skipping"
   fi
 }
 
 do_start_mesos_master() {
   echo "Checking for running mesos master"
 
-  if [ "x`pidof mesos-master`" = "x" ]
+  if [ ! -f $MESOS_INSTALL_DIR/mesos-master ]
   then
-    echo "Starting mesos master"
-    LD_LIBRARY_PATH=$MESOS_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} nohup mesos-master --ip=$MESOS_MASTER_IP --port=$MESOS_MASTER_PORT --work_dir=$MESOS_WORK_DIR >> $LOG_DIR/mesos-master.log 2>&1 &
+    echo "No mesos-master binary found, not starting"
   else
-    echo "Mesos master already running"
+    if [ "x`pidof mesos-master`" = "x" ]
+    then
+      echo "Starting mesos master"
+      LD_LIBRARY_PATH=$MESOS_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} nohup mesos-master --ip=$MESOS_MASTER_IP --port=$MESOS_MASTER_PORT --work_dir=$MESOS_WORK_DIR >> $LOG_DIR/mesos-master.log 2>&1 &
+    else
+      echo "Mesos master already running"
+    fi
   fi
 }
 
 do_start_mesos_slave() {
   echo "Checking for running mesos slave"
 
-  if [ "x`pidof mesos-slave`" = "x" ]
+  if [ ! -f $MESOS_INSTALL_DIR/mesos-slave ]
   then
-    echo "Starting mesos slave"
-    LD_LIBRARY_PATH=$MESOS_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} nohup mesos-slave --master=$MESOS_MASTER_IP:$MESOS_MASTER_PORT >> $LOG_DIR/mesos-slave.log 2>&1 &
+    echo "No mesos-slave binary found, not starting"
   else
-    echo "Mesos slave already running"
+    if [ "x`pidof mesos-slave`" = "x" ]
+    then
+      echo "Starting mesos slave"
+      LD_LIBRARY_PATH=$MESOS_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} nohup mesos-slave --master=$MESOS_MASTER_IP:$MESOS_MASTER_PORT >> $LOG_DIR/mesos-slave.log 2>&1 &
+    else
+      echo "Mesos slave already running"
+    fi
   fi
 }

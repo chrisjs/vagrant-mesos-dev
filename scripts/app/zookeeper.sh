@@ -9,10 +9,17 @@ ZOOKEEPER_BASE_URL=http://apache.mirrors.tds.net/zookeeper/zookeeper-$ZOOKEEPER_
 ZOOKEEPER_ARCHIVE_URL=$ZOOKEEPER_BASE_URL/$ZOOKEEPER_ARCHIVE_FILE_NAME
 ZOOKEEPER_DATA_DIR=$BASE_DIR/zookeeper-data
 ZOOKEEPER_CONF=$ZOOKEEPER_DIST_DIR/conf/zoo.cfg
+ZOOKEEPER_START_SCRIPT=$ZOOKEEPER_DIST_DIR/bin/zkServer.sh
 
 install_zookeeper() {
-  do_fetch_zookeeper
-  do_install_zookeeper
+  if [ ! -f $ZOOKEEPER_START_SCRIPT ]
+  then
+    do_fetch_zookeeper
+    do_install_zookeeper
+  else
+    echo "Zookeeper already installed, skipping"
+  fi
+
   do_start_zookeeper
 }
 
