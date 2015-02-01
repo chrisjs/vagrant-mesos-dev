@@ -4,3 +4,5 @@ only tested w/ vagrant 1.6.3, virtualbox 4.3.20 (r96996) and the 64 bit ubuntu 1
 
 mesos bound to 10.0.0.10 and web UI on port 5050
 
+Vagrant file allows various configuration options such as the box name, number of CPU's, RAM etc to be overriden via environment variables. See the top of Vagrantfile for overridable options.
+

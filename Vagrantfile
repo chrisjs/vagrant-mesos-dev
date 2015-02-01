@@ -16,7 +16,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = VM_BOX
   config.vm.box_check_update = VM_BOX_CHECK_UPDATE
 
-  # TODO: https://github.com/chrisjs/vagrant-mesos-dev/issues/7
   config.vm.provision :file, source: "scripts", destination: "~/scripts"
   config.vm.provision :shell, path: "scripts/bootstrap.sh", privileged: false
 
