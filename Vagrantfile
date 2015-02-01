@@ -10,8 +10,6 @@ VM_MEMORY = ENV['VM_MEMORY'] ? ENV['VM_MEMORY'] : 2048
 VM_CPUS = ENV['VM_CPUS'] ? ENV['VM_CPUS'] : 2
 VM_GUI = ENV['VM_GUI'] ? ENV['VM_GUI'] : false
 
-VM_APP_MESOS_UI_GUEST_PORT = ENV['MESOS_MASTER_PORT'] ? ENV['MESOS_MASTER_PORT'] : 5050
-
 Vagrant.require_version ">= 1.6.3"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -20,10 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision :file, source: "scripts", destination: "~/scripts"
   config.vm.provision :shell, inline: "chmod +x scripts/bootstrap.sh"
-  config.vm.provision :shell do |shell|
-    shell.privileged = false
-    shell.inline = "MESOS_MASTER_PORT=#{VM_APP_MESOS_UI_GUEST_PORT} scripts/bootstrap.sh"
-  end
+  config.vm.provision :shell, path: "scripts/bootstrap.sh", privileged: false
 
   config.vm.network :private_network, ip: VM_NETWORK_IP
 
