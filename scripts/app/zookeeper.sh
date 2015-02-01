@@ -20,8 +20,8 @@ do_fetch_zookeeper() {
   if [ ! -d $ZOOKEEPER_DIST_DIR ]
   then
     echo "Fetching $ZOOKEEPER_ARCHIVE_URL"
-    fetch_remote_file $ZOOKEEPER_ARCHIVE_URL
-    tar zxf $ZOOKEEPER_ARCHIVE_FILE_NAME
+    fetch_remote_file "-o $BASE_DIR/$ZOOKEEPER_ARCHIVE_FILE_NAME $ZOOKEEPER_ARCHIVE_URL"
+    tar zxf $BASE_DIR/$ZOOKEEPER_ARCHIVE_FILE_NAME -C $BASE_DIR
   else
     echo "Extracted ZooKeeper directory already exists, skipping"
   fi

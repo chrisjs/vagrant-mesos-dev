@@ -3,5 +3,5 @@
 set -e
 
 fetch_remote_file() {
-  curl -O --fail --silent --show-error $@
+  curl --fail --silent --show-error $@
 }

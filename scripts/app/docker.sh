@@ -16,9 +16,9 @@ install_docker() {
 }
 
 do_fetch_docker() {
-  if [ ! -f $DOCKER_DIST_FILE ]
+  if [ ! -f $DOCKER_INSTALL_PATH/$DOCKER_DIST_FILE_NAME ]
   then
-    echo "Fetching docker"
+    echo "Fetching $DOCKER_FILE_URL"
     fetch_remote_file "-o $DOCKER_DIST_FILE $DOCKER_FILE_URL"
   else
     echo "Docker file already exists, skipping"
@@ -26,13 +26,13 @@ do_fetch_docker() {
 }
 
 do_install_docker() {
-  if [ ! -f $DOCKER_DIST_FILE ]
+  if [ ! -f $DOCKER_INSTALL_PATH/$DOCKER_DIST_FILE_NAME ]
   then
-    echo "Docker binary does not exist, skipping"
-  else
     echo "Installing docker"
     sudo chmod +x $DOCKER_DIST_FILE ; sudo mv $DOCKER_DIST_FILE $DOCKER_INSTALL_PATH ;\
-     sudo ln -s $DOCKER_INSTALL_PATH/$DOCKER_DIST_FILE_NAME $DOCKER_INSTALL_PATH/docker
+     sudo ln -sf $DOCKER_INSTALL_PATH/$DOCKER_DIST_FILE_NAME $DOCKER_INSTALL_PATH/docker
+  else
+    echo "Docker binary exists, skipping"
   fi
 }
 

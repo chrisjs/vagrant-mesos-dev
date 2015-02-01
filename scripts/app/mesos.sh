@@ -24,8 +24,8 @@ do_fetch_mesos() {
   if [ ! -d $MESOS_DIST_DIR ]
   then
     echo "Fetching $MESOS_ARCHIVE_URL"
-    fetch_remote_file $MESOS_ARCHIVE_URL
-    tar zxf $MESOS_ARCHIVE_FILE_NAME
+    fetch_remote_file "-o $BASE_DIR/$MESOS_ARCHIVE_FILE_NAME $MESOS_ARCHIVE_URL"
+    tar zxf $BASE_DIR/$MESOS_ARCHIVE_FILE_NAME -C $BASE_DIR
   else
     echo "Extracted mesos source directory already exists, skipping"
   fi
