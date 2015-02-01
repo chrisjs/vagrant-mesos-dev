@@ -9,7 +9,7 @@ MESOS_BASE_URL=http://apache.mirrors.tds.net/mesos
 MESOS_ARCHIVE_URL=$MESOS_BASE_URL/$MESOS_VERSION/$MESOS_ARCHIVE_FILE_NAME
 MESOS_BUILD_DIR=$MESOS_DIST_DIR/build
 MESOS_WORK_DIR=$BASE_DIR/mesos-work
-MESOS_PORT=5050
+MESOS_MASTER_PORT=${MESOS_MASTER_PORT=5050}
 MESOS_LIB_DIR=/usr/local/lib
 MESOS_DEFAULT_INTERFACE=eth1
 MESOS_MASTER_IP=`/sbin/ifconfig $MESOS_DEFAULT_INTERFACE|grep inet|head -1|sed 's/\:/ /'|awk '{print $3}'`
@@ -57,7 +57,7 @@ do_start_mesos_master() {
   if [ "x`pidof mesos-master`" = "x" ]
   then
     echo "Starting mesos master"
-    LD_LIBRARY_PATH=$MESOS_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} nohup mesos-master --ip=$MESOS_MASTER_IP --work_dir=$MESOS_WORK_DIR >> $LOG_DIR/mesos-master.log 2>&1 &
+    LD_LIBRARY_PATH=$MESOS_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} nohup mesos-master --ip=$MESOS_MASTER_IP --port=$MESOS_MASTER_PORT --work_dir=$MESOS_WORK_DIR >> $LOG_DIR/mesos-master.log 2>&1 &
   else
     echo "Mesos master already running"
   fi
@@ -69,7 +69,7 @@ do_start_mesos_slave() {
   if [ "x`pidof mesos-slave`" = "x" ]
   then
     echo "Starting mesos slave"
-    LD_LIBRARY_PATH=$MESOS_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} nohup mesos-slave --master=$MESOS_MASTER_IP:$MESOS_PORT >> $LOG_DIR/mesos-slave.log 2>&1 &
+    LD_LIBRARY_PATH=$MESOS_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} nohup mesos-slave --master=$MESOS_MASTER_IP:$MESOS_MASTER_PORT >> $LOG_DIR/mesos-slave.log 2>&1 &
   else
     echo "Mesos slave already running"
   fi
