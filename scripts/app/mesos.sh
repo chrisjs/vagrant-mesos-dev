@@ -11,8 +11,7 @@ MESOS_BUILD_DIR=$MESOS_DIST_DIR/build
 MESOS_WORK_DIR=$BASE_DIR/mesos-work
 MESOS_MASTER_PORT=5050
 MESOS_LIB_DIR=/usr/local/lib
-MESOS_DEFAULT_INTERFACE=eth1
-MESOS_MASTER_IP=`/sbin/ifconfig $MESOS_DEFAULT_INTERFACE|grep inet|head -1|sed 's/\:/ /'|awk '{print $3}'`
+MESOS_MASTER_IP=0.0.0.0
 
 install_mesos() {
   do_fetch_mesos
