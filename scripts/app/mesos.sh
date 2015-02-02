@@ -48,18 +48,48 @@ do_install_mesos() {
     echo "Mesos build directory already exists, skipping"
   fi
 
-  if [ ! -f $MESOS_BUILD_DIR/.complete ]
+  pushd $MESOS_BUILD_DIR
+
+  if [ ! -f .complete ]
   then
-    echo "Building/installing Mesos"
+    if [ ! -f .configcomp ]
+    then
+      echo "Configuring Mesos"
+      ../configure ; touch .configcomp
+    else
+      echo "Configuring Mesos already complete, skipping"
+    fi
 
-    pushd $MESOS_BUILD_DIR
+    if [ ! -f .makecomp ]
+    then
+      echo "Making Mesos"
+      make ; touch .makecomp
+    else
+      echo "Make of Mesos already complete, skipping"
+    fi
 
-    ../configure ; make ; make check ; sudo make install ; touch .complete
+    if [ ! -f .makechkcomp ]
+    then
+      echo "Running Mesos checks"
+      make check ; touch .makechkcomp
+    else
+      echo "Running of Mesos checks already complete, skipping"
+    fi
 
-    popd
+    if [ ! -f .makeinscomp ]
+    then
+      echo "Installing Mesos"
+      sudo make install ; touch .makeinscomp
+    else
+      echo "Install of Mesos already complete, skipping"
+    fi
+
+    touch .complete
   else
     echo "Mesos already built and installed, skipping"
   fi
+
+  popd
 }
 
 do_start_mesos_master() {
