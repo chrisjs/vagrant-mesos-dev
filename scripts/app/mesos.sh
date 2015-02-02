@@ -48,7 +48,7 @@ do_install_mesos() {
     echo "Mesos build directory already exists, skipping"
   fi
 
-  pushd $MESOS_BUILD_DIR
+  pushd $MESOS_BUILD_DIR  > /dev/null
 
   if [ ! -f .complete ]
   then
@@ -89,7 +89,7 @@ do_install_mesos() {
     echo "Mesos already built and installed, skipping"
   fi
 
-  popd
+  popd > /dev/null
 }
 
 do_start_mesos_master() {
