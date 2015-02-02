@@ -60,7 +60,7 @@ clientPort=2181
 do_start_zookeeper() {
   echo "Checking for running ZooKeeper"
 
-  if [ "x`jps | grep QuorumPeerMain`" = "x" ]
+  if [ "x$(jps | grep QuorumPeerMain)" = "x" ]
   then
     echo "Starting ZooKeeper"
     ZOO_LOG_DIR=$LOG_DIR $ZOOKEEPER_DIST_DIR/bin/zkServer.sh start

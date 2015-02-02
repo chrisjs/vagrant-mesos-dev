@@ -45,7 +45,7 @@ do_install_docker() {
 do_start_docker() {
   echo "Checking for running docker"
 
-  if [ "x`pidof docker`" = "x" ]
+  if [ "x$(pidof docker)" = "x" ]
   then
     echo "Starting docker"
     sudo $DOCKER_INSTALL_PATH/docker -d >> $LOG_DIR/docker.log 2>&1 &

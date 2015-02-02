@@ -95,11 +95,11 @@ do_install_mesos() {
 do_start_mesos_master() {
   echo "Checking for running mesos master"
 
-  if [ "x`which mesos-master`" = "x" ]
+  if [ "x$(which mesos-master)" = "x" ]
   then
     echo "No mesos-master binary found, not starting"
   else
-    if [ "x`pidof mesos-master`" = "x" ]
+    if [ "x$(pidof mesos-master)" = "x" ]
     then
       echo "Starting mesos master"
       LD_LIBRARY_PATH=$MESOS_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} nohup mesos-master --ip=$MESOS_MASTER_IP --port=$MESOS_MASTER_PORT --work_dir=$MESOS_WORK_DIR >> $LOG_DIR/mesos-master.log 2>&1 &
@@ -112,11 +112,11 @@ do_start_mesos_master() {
 do_start_mesos_slave() {
   echo "Checking for running mesos slave"
 
-  if [ "x`which mesos-slave`" = "x" ]
+  if [ "x$(which mesos-slave)" = "x" ]
   then
     echo "No mesos-slave binary found, not starting"
   else
-    if [ "x`pidof mesos-slave`" = "x" ]
+    if [ "x$(pidof mesos-slave)" = "x" ]
     then
       echo "Starting mesos slave"
       LD_LIBRARY_PATH=$MESOS_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} nohup mesos-slave --master=$MESOS_MASTER_IP:$MESOS_MASTER_PORT >> $LOG_DIR/mesos-slave.log 2>&1 &
