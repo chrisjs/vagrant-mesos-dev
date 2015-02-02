@@ -12,7 +12,6 @@ MESOS_WORK_DIR=$BASE_DIR/mesos-work
 MESOS_MASTER_PORT=5050
 MESOS_LIB_DIR=/usr/local/lib
 MESOS_MASTER_IP=0.0.0.0
-MESOS_INSTALL_DIR=/usr/local/sbin
 
 install_mesos() {
   do_fetch_mesos
@@ -66,7 +65,7 @@ do_install_mesos() {
 do_start_mesos_master() {
   echo "Checking for running mesos master"
 
-  if [ ! -f $MESOS_INSTALL_DIR/mesos-master ]
+  if [ "x`which mesos-master`" = "x" ]
   then
     echo "No mesos-master binary found, not starting"
   else
@@ -83,7 +82,7 @@ do_start_mesos_master() {
 do_start_mesos_slave() {
   echo "Checking for running mesos slave"
 
-  if [ ! -f $MESOS_INSTALL_DIR/mesos-slave ]
+  if [ "x`which mesos-slave`" = "x" ]
   then
     echo "No mesos-slave binary found, not starting"
   else
