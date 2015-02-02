@@ -2,10 +2,11 @@
 
 VAGRANTFILE_API_VERSION = "2"
 
+VERSION = File.open('VERSION', 'r') { |file| file.read }
 VM_BOX = ENV['VM_BOX'] ? ENV['VM_BOX'] : "box-cutter/ubuntu1404"
 VM_BOX_CHECK_UPDATE = ENV['VM_BOX_CHECK_UPDATE'] ? ENV['VM_BOX_CHECK_UPDATE'] : false
 VM_NETWORK_IP = ENV['VM_NETWORK_IP'] ? ENV['VM_NETWORK_IP'] : "10.0.0.10"
-VM_NAME = ENV['VM_NAME'] ? ENV['VM_NAME'] : "trusty.14.04.1.64bit.v1.0.11.mesos.singlenodedev"
+VM_NAME = ENV['VM_NAME'] ? ENV['VM_NAME'] : "trusty.14.04.1.64bit.v1.0.11.mesos.singlenodedev-#{VERSION}"
 VM_MEMORY = ENV['VM_MEMORY'] ? ENV['VM_MEMORY'] : 2048
 VM_CPUS = ENV['VM_CPUS'] ? ENV['VM_CPUS'] : 2
 VM_GUI = ENV['VM_GUI'] ? ENV['VM_GUI'] : false
