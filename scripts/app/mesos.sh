@@ -2,7 +2,7 @@
 
 set -e
 
-MESOS_VERSION=0.21.0
+MESOS_VERSION=0.21.1
 MESOS_DIST_DIR=$BASE_DIR/mesos-$MESOS_VERSION
 MESOS_ARCHIVE_FILE_NAME=mesos-$MESOS_VERSION.tar.gz
 MESOS_BASE_URL=http://apache.mirrors.tds.net/mesos
