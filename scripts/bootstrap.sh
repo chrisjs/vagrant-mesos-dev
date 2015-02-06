@@ -2,10 +2,13 @@
 
 set -e
 
-BASE_DIR=$HOME
+BASE_DIR=${BASE_DIR=$HOME}
+
+APP_DIR=$BASE_DIR/application
 LOG_DIR=$BASE_DIR/logs
 
 SCRIPTS_DIR=$BASE_DIR/scripts
+
 SCRIPTS_OS_DIR=$SCRIPTS_DIR/os
 SCRIPTS_APP_BUILD_SPECS_DIR=$SCRIPTS_DIR/app
 SCRIPTS_UTIL_DIR=$SCRIPTS_DIR/util
@@ -16,8 +19,10 @@ PROCESSOR_ARCH=$(uname -p)
 OS_NAME=$(uname -s)
 
 pre_install() {
+  echo "Base dir at: $BASE_DIR"
   check_platform
   create_log_dir
+  create_app_dir
   source_deps
 }
 
@@ -42,10 +47,20 @@ check_platform() {
 create_log_dir() {
   if [ ! -d $LOG_DIR ]
   then
-    echo "Creating app log dir"
+    echo "Creating app log dir: $LOG_DIR"
     mkdir $LOG_DIR
   else
-    echo "App log dir already exists, skipping"
+    echo "App log dir ($LOG_DIR) already exists, skipping"
+  fi
+}
+
+create_app_dir() {
+  if [ ! -d $APP_DIR ]
+  then
+    echo "Creating applications dir at: $APP_DIR"
+    mkdir $APP_DIR
+  else
+    echo "Application dir ($APP_DIR) already exists, skipping"
   fi
 }
 

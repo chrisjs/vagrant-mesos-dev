@@ -3,12 +3,12 @@
 set -e
 
 MESOS_VERSION=0.21.1
-MESOS_DIST_DIR=$BASE_DIR/mesos-$MESOS_VERSION
+MESOS_DIST_DIR=$APP_DIR/mesos-$MESOS_VERSION
 MESOS_ARCHIVE_FILE_NAME=mesos-$MESOS_VERSION.tar.gz
 MESOS_BASE_URL=http://apache.mirrors.tds.net/mesos
 MESOS_ARCHIVE_URL=$MESOS_BASE_URL/$MESOS_VERSION/$MESOS_ARCHIVE_FILE_NAME
 MESOS_BUILD_DIR=$MESOS_DIST_DIR/build
-MESOS_WORK_DIR=$BASE_DIR/mesos-work
+MESOS_WORK_DIR=$APP_DIR/mesos-work
 MESOS_MASTER_PORT=5050
 MESOS_LIB_DIR=/usr/local/lib
 MESOS_MASTER_IP=0.0.0.0
@@ -24,8 +24,8 @@ do_fetch_mesos() {
   if [ ! -d $MESOS_DIST_DIR ]
   then
     echo "Fetching $MESOS_ARCHIVE_URL"
-    fetch_remote_file "-o $BASE_DIR/$MESOS_ARCHIVE_FILE_NAME $MESOS_ARCHIVE_URL"
-    tar zxf $BASE_DIR/$MESOS_ARCHIVE_FILE_NAME -C $BASE_DIR
+    fetch_remote_file "-o $APP_DIR/$MESOS_ARCHIVE_FILE_NAME $MESOS_ARCHIVE_URL"
+    tar zxf $APP_DIR/$MESOS_ARCHIVE_FILE_NAME -C $APP_DIR
   else
     echo "Extracted Mesos source directory already exists, skipping"
   fi
