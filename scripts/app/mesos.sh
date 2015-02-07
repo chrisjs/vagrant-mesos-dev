@@ -12,6 +12,7 @@ MESOS_WORK_DIR=$APP_DIR/mesos-work
 MESOS_MASTER_PORT=5050
 MESOS_LIB_DIR=/usr/local/lib
 MESOS_MASTER_IP=0.0.0.0
+LD_LIBRARY_PATH=$MESOS_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 
 install_mesos() {
   do_fetch_mesos
@@ -102,7 +103,7 @@ do_start_mesos_master() {
     if [ "x$(pidof mesos-master)" = "x" ]
     then
       echo "Starting mesos master"
-      LD_LIBRARY_PATH=$MESOS_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} nohup mesos-master --ip=$MESOS_MASTER_IP --port=$MESOS_MASTER_PORT --work_dir=$MESOS_WORK_DIR >> $LOG_DIR/mesos-master.log 2>&1 &
+      LD_LIBRARY_PATH=$LD_LIBRARY_PATH nohup mesos-master --ip=$MESOS_MASTER_IP --port=$MESOS_MASTER_PORT --work_dir=$MESOS_WORK_DIR >> $LOG_DIR/mesos-master.log 2>&1 &
     else
       echo "Mesos master already running"
     fi
@@ -119,7 +120,7 @@ do_start_mesos_slave() {
     if [ "x$(pidof mesos-slave)" = "x" ]
     then
       echo "Starting mesos slave"
-      LD_LIBRARY_PATH=$MESOS_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} nohup mesos-slave --master=$MESOS_MASTER_IP:$MESOS_MASTER_PORT >> $LOG_DIR/mesos-slave.log 2>&1 &
+      LD_LIBRARY_PATH=$LD_LIBRARY_PATH nohup mesos-slave --master=$MESOS_MASTER_IP:$MESOS_MASTER_PORT >> $LOG_DIR/mesos-slave.log 2>&1 &
     else
       echo "Mesos slave already running"
     fi
