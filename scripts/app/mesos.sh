@@ -121,7 +121,7 @@ do_start_mesos_slave() {
     if [ "x$(pidof mesos-slave)" = "x" ]
     then
       echo "Starting mesos slave"
-      LD_LIBRARY_PATH=$LD_LIBRARY_PATH nohup mesos-slave --master=$MESOS_ZOOKEEPER_URI >> $LOG_DIR/mesos-slave.log 2>&1 &
+      LD_LIBRARY_PATH=$LD_LIBRARY_PATH nohup sudo mesos-slave --master=$MESOS_ZOOKEEPER_URI --containerizers=docker,mesos >> $LOG_DIR/mesos-slave.log 2>&1 &
     else
       echo "Mesos slave already running"
     fi
