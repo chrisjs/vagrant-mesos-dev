@@ -13,7 +13,7 @@ SCRIPTS_OS_DIR=$SCRIPTS_DIR/os
 SCRIPTS_APP_BUILD_SPECS_DIR=$SCRIPTS_DIR/app
 SCRIPTS_UTIL_DIR=$SCRIPTS_DIR/util
 
-APP_BUILD_SPECS=(docker zookeeper mesos)
+APP_BUILD_SPECS=(docker zookeeper mesos marathon)
 
 PROCESSOR_ARCH=$(uname -p)
 OS_NAME=$(uname -s)
