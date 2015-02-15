@@ -1,5 +1,13 @@
 #!/bin/sh
-
+#
+# Creates a versioned archive of the scripts directory suitable for
+# uploading and running on an OS instance. Typically this would be
+# used if you wanted to create a distribution archive and use it
+# without vagrant or with a pre-existing vagrant VM but not use
+# its provisioning abilities.
+#
+#  Author: Chris Schaefer
+#
 set -e
 
 BASE_DIR="$( cd "$( dirname "$0" )" && pwd )"
@@ -13,4 +21,3 @@ tar zcf $ARCHIVE_FILE_NAME scripts
 popd > /dev/null
 
 echo "Archive created at $BASE_DIR/$ARCHIVE_FILE_NAME"
-
