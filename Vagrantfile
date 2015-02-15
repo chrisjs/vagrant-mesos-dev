@@ -1,5 +1,29 @@
 # -*- mode: ruby -*-
-
+#
+# Vagrant file that defines configuration parameters and builds the
+# VM instance using the provided scripts. This configuration file
+# provides reasonable defaults for the VM, allowing them to be
+# overridden via environment variables. The following environment
+# variables may be set or passed to Vagrant by the user to change
+# these defaults:
+#
+# VM_BOX - the vagrant box name to use
+# VM_BOX_CHECK_UPDATE - boolean if updates should be checked
+# VM_NETWORK_IP - the IP to use for the private network interface
+# VM_NAME - the name of this VM instance
+# VM_MEMORY - the amount of memory for this VM instance
+# VM_CPUS - the number of CPU's for this VM instance
+# VM_GUI - boolean to display the provider GUI or not
+#
+# NOTE: Mesos compilation uses a large amount of memory and
+# it's recommended to use the default size when first building the
+# VM (2gig).
+#
+# The provided scripts, downloaded sources, logs, etc. reside in the
+# home directory of the user "vagrant".
+#
+# Currently Virtualbox and VWware fusion are supported providers.
+#
 VAGRANTFILE_API_VERSION = "2"
 
 VERSION = File.open('VERSION', 'r') { |file| file.read }
