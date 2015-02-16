@@ -6,7 +6,7 @@
 # without vagrant or with a pre-existing vagrant VM but not use
 # its provisioning abilities.
 #
-#  Author: Chris Schaefer
+# Author: Chris Schaefer
 #
 set -e
 
