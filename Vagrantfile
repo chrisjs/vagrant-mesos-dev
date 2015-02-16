@@ -24,6 +24,8 @@
 #
 # Currently Virtualbox and VWware fusion are supported providers.
 #
+# Author: Chris Schaefer
+#
 VAGRANTFILE_API_VERSION = "2"
 
 VERSION = File.open('VERSION', 'r') { |file| file.read }
