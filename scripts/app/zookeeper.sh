@@ -68,3 +68,4 @@ do_start_zookeeper() {
     echo "ZooKeeper already running"
   fi
 }
+

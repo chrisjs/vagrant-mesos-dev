@@ -10,7 +10,7 @@
 #
 set -e
 
-BASE_DIR="$( cd "$( dirname "$0" )" && pwd )"
+BASE_DIR="$(cd "$( dirname "$0" )" && pwd)"
 VERSION=$(cat $BASE_DIR/VERSION)
 ARCHIVE_FILE_NAME=mesos-dev-$VERSION.tar.gz
 
@@ -19,3 +19,4 @@ echo "Building standalone distribution archive for version: $VERSION"
 tar zcf $BASE_DIR/$ARCHIVE_FILE_NAME scripts
 
 echo "Archive created at $BASE_DIR/$ARCHIVE_FILE_NAME"
+

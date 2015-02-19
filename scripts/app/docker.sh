@@ -59,3 +59,4 @@ do_start_docker() {
     echo "Docker already running"
   fi
 }
+
