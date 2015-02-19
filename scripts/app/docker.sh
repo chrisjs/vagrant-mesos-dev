@@ -1,5 +1,11 @@
 #!/bin/bash
-
+#
+# Application spec to install Docker.
+#
+# Depends on: util/util.sh
+#
+# Author: Chris Schaefer
+#
 set -e
 
 DOCKER_VERSION=1.4.0
