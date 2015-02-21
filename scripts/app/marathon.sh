@@ -1,5 +1,11 @@
 #!/bin/bash
-
+#
+# Application spec to install Marathon.
+#
+# Depends on: util/util.sh
+#
+# Author: Chris Schaefer
+#
 set -e
 
 MARATHON_VERSION=0.7.5
