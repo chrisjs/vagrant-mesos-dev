@@ -1,5 +1,11 @@
 #!/bin/bash
-
+#
+# Application spec to install Mesos.
+#
+# Depends on: util/util.sh
+#
+# Author: Chris Schaefer
+#
 set -e
 
 MESOS_VERSION=0.21.1
