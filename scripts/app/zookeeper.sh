@@ -1,5 +1,10 @@
 #!/bin/bash
-
+#
+# Application spec to install ZooKeeper.
+#
+# Depends on: util/util.sh
+#
+# Author: Chris Schaefer
 set -e
 
 ZOOKEEPER_VERSION=3.4.6
