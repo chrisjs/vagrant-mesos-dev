@@ -1,25 +1,37 @@
 #!/bin/bash
-
+#
+# Main entry point to setup the development environment, invoked from either
+# Vagrant or directly. This script will check for a supported platform, create the
+# expected directory structure for logs and applications if needed and install
+# applications specified in the APP_BUILD_SPECS variable.
+#
+# New applications can be built simply by adding a build script to the app
+# directory and inserting its name (filename without extension) to the
+# APP_BUILD_SPECS variable. Order is preserved so any dependencies should be
+# added earlier in the list. Every app spec should have a function with the
+# application name as defined in the APP_BUILD_SPECS variable, prefixed by
+# "install_" which will be called by this script.
+#
+# Depends on: os/, util/, app/
+#
+# Author: Chris Schaefer
+#
 set -e
 
 BASE_DIR=${BASE_DIR=$HOME}
-
 APP_DIR=$BASE_DIR/application
 LOG_DIR=$BASE_DIR/logs
-
 SCRIPTS_DIR=$BASE_DIR/scripts
-
 SCRIPTS_OS_DIR=$SCRIPTS_DIR/os
 SCRIPTS_APP_BUILD_SPECS_DIR=$SCRIPTS_DIR/app
 SCRIPTS_UTIL_DIR=$SCRIPTS_DIR/util
-
 APP_BUILD_SPECS=(docker zookeeper mesos marathon)
-
 PROCESSOR_ARCH=$(uname -p)
 OS_NAME=$(uname -s)
 
 pre_install() {
   echo "Base dir at: $BASE_DIR"
+
   check_platform
   create_log_dir
   create_app_dir
