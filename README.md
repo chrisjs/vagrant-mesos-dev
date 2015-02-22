@@ -89,6 +89,8 @@ vagrant up --provision
 
       * Marathon UI: http://VM_IP:8080
 
+  * While startup scripts are not provided, there is a sample rc.local in the contrib directory which can be used as-is or modified to your needs. There is also a sample docker-deploy.sh script which can be used as-is or as a template for deploying other Docker images to the Marathon instance. These scripts work for both Vagrant and standalone, see the file comments for more details.
+
 ##Getting started - Extending
 
 * To extend the Vagrant build itself, take a look at the Vagrant file and its comments.
