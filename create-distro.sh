@@ -16,6 +16,6 @@ ARCHIVE_FILE_NAME=mesos-dev-$VERSION.tar.gz
 
 echo "Building standalone distribution archive for version: $VERSION"
 
-tar zcf $BASE_DIR/$ARCHIVE_FILE_NAME scripts
+tar zcf $BASE_DIR/$ARCHIVE_FILE_NAME scripts contrib
 
 echo "Archive created at $BASE_DIR/$ARCHIVE_FILE_NAME"
