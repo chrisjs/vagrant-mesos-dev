@@ -1,0 +1,45 @@
+#!/bin/sh -e
+#
+# Sample /etc/rc.local script to start applications at boot time and assumes 
+# Vagrant install. Makes minimal assumptions about things like running
+# user (just runs as root), install dir, etc. This can be used in place of
+# running Vagrant up --provision to bring services back up when the VM
+# is restarted.
+#
+# Author: Chris Schaefer
+#
+DOCKER=/usr/sbin/docker
+INSTALL_DIR=/home/vagrant
+LOGS_DIR=$INSTALL_DIR/logs
+APPLICATION_DIR=$INSTALL_DIR/application
+ZOOKEEPER_VERSION=3.4.6
+ZOOKEEPER="$APPLICATION_DIR/zookeeper-$ZOOKEEPER_VERSION/bin/zkServer.sh start"
+MESOS_LIB_DIR=/usr/local/lib
+LD_LIBRARY_PATH=$MESOS_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+MESOS_MASTER=/usr/local/sbin/mesos-master
+MESOS_MASTER_IP=0.0.0.0
+MESOS_MASTER_PORT=5050
+MESOS_WORK_DIR=$APPLICATION_DIR/mesos-work
+MESOS_ZK_URI=zk://127.0.0.1:2181/mesos
+MESOS_QUORUM_SIZE=1
+MESOS_SLAVE=/usr/local/sbin/mesos-slave
+MARATHON_VERSION=0.7.5
+MARATHON=$APPLICATION_DIR/marathon-$MARATHON_VERSION/bin/start
+MARATHON_ZK_URI=zk://127.0.0.1:2181/marathon
+
+echo "Starting Docker"
+$DOCKER -d >> $LOGS_DIR/docker.log 2>&1 &
+
+echo "Starting ZooKeeper"
+ZOO_LOG_DIR=$LOGS_DIR $ZOOKEEPER
+
+echo "Starting Mesos master"
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH nohup $MESOS_MASTER --ip=$MESOS_MASTER_IP --port=$MESOS_MASTER_PORT --work_dir=$MESOS_WORK_DIR --zk=$MESOS_ZK_URI --quorum=$MESOS_QUORUM_SIZE >> $LOGS_DIR/mesos-master.log 2>&1 &
+
+echo "Starting Mesos slave"
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH nohup $MESOS_SLAVE --master=$MESOS_ZK_URI --containerizers=docker,mesos > $LOGS_DIR/mesos-slave.log 2>&1 &
+
+echo "Starting Marathon"
+nohup $MARATHON --master $MESOS_ZK_URI --zk $MARATHON_ZK_URI  >> $LOGS_DIR/marathon.log 2>&1 &
+
+exit 0
