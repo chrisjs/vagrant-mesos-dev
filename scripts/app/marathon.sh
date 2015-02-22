@@ -52,4 +52,3 @@ do_start_marathon() {
     echo "Marathon already running"
   fi
 }
-

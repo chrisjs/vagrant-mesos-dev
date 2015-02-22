@@ -98,4 +98,3 @@ vagrant up --provision
   * It's a good idea to make sure any extensions or exposing of additional configuration options work for both the Vagrant method as well as standalone (unless there is a specific reason not to).
 
 The system is simple, yet has been working well. Issue reports and PR's are always welcome.
-

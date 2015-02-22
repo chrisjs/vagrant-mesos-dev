@@ -18,10 +18,10 @@ DOCKER_INSTALL_PATH=/usr/sbin
 install_docker() {
   if [ ! -f $DOCKER_INSTALL_PATH/$DOCKER_DIST_FILE_NAME ]
   then
-    do_fetch_docker
-    do_install_docker
+	do_fetch_docker
+	do_install_docker
   else
-    echo "Docker already installed, skipping"
+	echo "Docker already installed, skipping"
   fi
 
   do_start_docker
@@ -30,21 +30,21 @@ install_docker() {
 do_fetch_docker() {
   if [ ! -f $DOCKER_INSTALL_PATH/$DOCKER_DIST_FILE_NAME ]
   then
-    echo "Fetching $DOCKER_FILE_URL"
-    fetch_remote_file "-o $DOCKER_DIST_FILE $DOCKER_FILE_URL"
+	echo "Fetching $DOCKER_FILE_URL"
+	fetch_remote_file "-o $DOCKER_DIST_FILE $DOCKER_FILE_URL"
   else
-    echo "Docker file already exists, skipping"
+	echo "Docker file already exists, skipping"
   fi
 }
 
 do_install_docker() {
   if [ ! -f $DOCKER_INSTALL_PATH/$DOCKER_DIST_FILE_NAME ]
   then
-    echo "Installing docker"
-    sudo chmod +x $DOCKER_DIST_FILE ; sudo mv $DOCKER_DIST_FILE $DOCKER_INSTALL_PATH ;\
-     sudo ln -sf $DOCKER_INSTALL_PATH/$DOCKER_DIST_FILE_NAME $DOCKER_INSTALL_PATH/docker
+	echo "Installing docker"
+	sudo chmod +x $DOCKER_DIST_FILE ; sudo mv $DOCKER_DIST_FILE $DOCKER_INSTALL_PATH ;\
+	 sudo ln -sf $DOCKER_INSTALL_PATH/$DOCKER_DIST_FILE_NAME $DOCKER_INSTALL_PATH/docker
   else
-    echo "Docker binary exists, skipping"
+	echo "Docker binary exists, skipping"
   fi
 }
 
@@ -53,10 +53,9 @@ do_start_docker() {
 
   if [ "x$(pidof docker)" = "x" ]
   then
-    echo "Starting docker"
-    sudo $DOCKER_INSTALL_PATH/docker -d >> $LOG_DIR/docker.log 2>&1 &
+	echo "Starting docker"
+	sudo $DOCKER_INSTALL_PATH/docker -d >> $LOG_DIR/docker.log 2>&1 &
   else
-    echo "Docker already running"
+	echo "Docker already running"
   fi
 }
-

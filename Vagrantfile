@@ -62,4 +62,3 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     provider.vmx['numvcpus'] = VM_CPUS
   end
 end
-

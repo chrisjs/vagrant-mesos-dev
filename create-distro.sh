@@ -19,4 +19,3 @@ echo "Building standalone distribution archive for version: $VERSION"
 tar zcf $BASE_DIR/$ARCHIVE_FILE_NAME scripts
 
 echo "Archive created at $BASE_DIR/$ARCHIVE_FILE_NAME"
-
