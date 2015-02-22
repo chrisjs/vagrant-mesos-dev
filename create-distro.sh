@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Creates a versioned archive of the scripts directory suitable for
 # uploading and running on an OS instance. Typically this would be
