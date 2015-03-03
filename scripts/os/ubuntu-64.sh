@@ -9,7 +9,7 @@
 #
 set -e
 
-APT_PACKAGES=(build-essential openjdk-7-jdk python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev cgroup-lite golang git)
+APT_PACKAGES=(build-essential openjdk-7-jdk python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev cgroup-lite git)
 
 install_os_deps() {
   do_apt_update
